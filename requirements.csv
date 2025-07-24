@@ -1,0 +1,25 @@
+S.No.,Requirement,Category,Status
+1,The system shall maintain vehicle speed at a user-defined desired speed when no lead vehicle is detected.,System Requirement,New
+2,The system shall automatically adjust vehicle speed to maintain a safe following distance when a lead vehicle is detected.,System Requirement,New
+3,"The system shall transition between operational states (OFF, STANDBY, ACTIVE, ERROR) based on user commands and system conditions.",System Requirement,New
+4,"The system shall process real-time sensor data about lead vehicle distance, speed, and detection status to inform speed adjustments.",System Requirement,New
+5,"The system shall calculate acceleration/deceleration commands based on relative speed, safe distance thresholds, and desired cruising speed.",System Requirement,New
+6,The system shall enforce speed limits and acceleration/deceleration boundaries for safety.,System Requirement,New
+7,"The system shall provide status feedback including current speed, desired speed, ACC state, and lead vehicle information.",System Requirement,New
+8,The system shall handle error conditions by reverting to a safe state when invalid inputs are detected.,System Requirement,New
+9,"The system shall initialize the ACC system by setting the current speed, desired speed, and acceleration command to the provided initial speed, zero, respectively, and transition the system state to STANDBY.",Functional Requirement,New
+10,"The system shall set the desired cruise speed to the specified value if it is greater than zero and does not exceed the maximum allowed speed, otherwise it shall report an error and transition to an error state.",Functional Requirement,New
+11,"The system shall update the lead vehicle's distance, speed, and detection status when the updateLeadVehicle function is called with valid input parameters.",Functional Requirement,New
+12,"The system shall update the acceleration command based on the current system state, lead vehicle detection status, and relative distance and speed to maintain safe following distance or achieve desired speed when no lead vehicle is detected, while setting acceleration to zero in case of an error state.",Functional Requirement,New
+13,"The system shall adjust the vehicle speed to maintain a safe distance when the distance to the lead vehicle is less than the safe distance plus 10 meters, by calculating the relative speed and applying acceleration or deceleration within the defined limits.",Functional Requirement,New
+14,The system shall issue an acceleration command set to half of the maximum acceleration if the current speed is less than the desired speed.,Functional Requirement,New
+15,The system shall apply a deceleration command equal to half of the maximum deceleration when the current speed exceeds the desired speed.,Functional Requirement,New
+16,The system shall apply half of the maximum acceleration command when the current speed is less than the desired speed to maintain the desired speed.,Functional Requirement,New
+17,The system shall set the acceleration command to half of the maximum deceleration value when the current speed exceeds the desired speed.,Functional Requirement,New
+18,"The system shall update the current speed based on the provided acceleration command and time step, ensuring the speed remains within the range of 0 km/h to the predefined MAX_SPEED, with all calculations performed in meters per second before converting back to kilometers per hour.",Functional Requirement,New
+19,The system shall clamp the current speed to the maximum speed limit if the current speed exceeds the maximum speed limit.,Functional Requirement,New
+20,"The system shall transition from STANDBY to ACTIVE state when the start function is invoked, and shall output ""ACC Activated"" upon successful transition; otherwise, it shall output an error message if the current state is not STANDBY.",Functional Requirement,New
+21,The system shall transition the ACC system from the ACTIVE state to the STANDBY state and set the acceleration command to zero when the stop function is invoked.,Functional Requirement,New
+22,"The system shall update the Adaptive Cruise Control (ACC) logic every cycle by processing the lead vehicle's distance, speed, and detection status, computing the acceleration command, and adjusting the ego vehicle's speed based on the elapsed time.",Functional Requirement,New
+23,The system shall maintain the vehicle's speed at the desired setpoint while adjusting for lead vehicle presence by automatically controlling acceleration and deceleration according to the detected lead vehicle's distance and speed.,Functional Requirement,New
+24,The system shall update and print the Adaptive Cruise Control (ACC) status for each sensor data entry in the lead vehicle data at 100-millisecond intervals.,Functional Requirement,New
