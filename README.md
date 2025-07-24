@@ -1,16 +1,24 @@
 # Legacy2Reqs: Automated Requirements Extraction from Legacy Code
-<img width="1602" height="874" alt="image" src="https://github.com/user-attachments/assets/78c66121-f69c-4ca6-a3df-1510aa6b62e5" />
+<img width="1576" height="902" alt="Screenshot 2025-07-24 123945" src="https://github.com/user-attachments/assets/47b64b86-6ca2-4c79-be17-d5913c5cd3d6" />
+
 
 
 ## Overview
 
-**Legacy2Reqs** is a Streamlit-powered tool that helps engineering teams in the automotive industry extract high-level system and function-specific requirements directly from legacy Python codebases. This workflow accelerates requirement traceability, refactoring, and modernization—enabling safer, more agile, and standards-compliant product development.
+This is a AI-powered tool that helps engineering teams in the automotive industry extract high-level system and function-specific requirements directly from legacy C, C++, JavaScript and Python codebases. This workflow accelerates requirement traceability, refactoring, and modernization enabling safer, more agile, and standards-compliant product development.
 
+## Code Example
+The ADAS Adaptive Cruise Control (ACC) code snippet simulates a realistic vehicle speed and distance control system that automatically maintains safe following distance and adjusts speed based on sensor data. It includes modular functions for initialization, sensor input processing, state management (OFF, STANDBY, ACTIVE, ERROR), speed control via acceleration commands, and status reporting. This structured, well-commented code with clear functional boundaries enables the requirements extraction tool to generate meaningful system-level and function-level requirements reflecting real-world ACC capabilities and control logic.
+
+This explanation highlights the key aspects inside the code that drive the generated requirements, helping your viewers connect the code structure and behavior to the formalized requirements statements.
 ## Results showcasing Functional Requirements with respective function block snippet
-<img width="1139" height="907" alt="Screenshot 2025-07-23 183917" src="https://github.com/user-attachments/assets/5a5867bd-64a3-43df-a0bb-0b447a118697" />
+<img width="1557" height="880" alt="image" src="https://github.com/user-attachments/assets/9b560228-037d-4b24-979b-e3c29477481b" />
+
 
 ## Results showcasing System Requirements
-<img width="1839" height="728" alt="Screenshot 2025-07-23 120037" src="https://github.com/user-attachments/assets/6157875c-7228-43cf-8cec-b7d39fd99b49" />
+<img width="1401" height="704" alt="Screenshot 2025-07-24 124311" src="https://github.com/user-attachments/assets/ed810773-5d5c-486a-a7c9-8aa577a3bb1a" />
+
+
 
 ## Why Extract Requirements from Legacy Code in Automotive?
 
@@ -62,6 +70,9 @@ Automotive suppliers (OEMs, Tier 1/2) often deliver the same base software to mu
 | 1     | The system shall support variant-specific configuration.                | System Requirement     | New    |
 | 2     | The system shall control CAN communication based on configuration data. | Functional Requirement | New    |
 | ...   | ...                                                                    | ...                     | ...    |
+
+<img width="1315" height="509" alt="image" src="https://github.com/user-attachments/assets/fd64b98b-9886-4890-848c-50f769df83ed" />
+
 
 ## License & Usage
 
