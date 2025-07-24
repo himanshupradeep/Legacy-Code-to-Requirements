@@ -1,5 +1,6 @@
 # Legacy2Reqs: Automated Requirements Extraction from Legacy Code
-<img width="1302" height="623" alt="Screenshot 2025-07-23 151334" src="https://github.com/user-attachments/assets/361d9b9e-4fbd-432a-9bc7-fe58147459c7" />
+<img width="1602" height="874" alt="image" src="https://github.com/user-attachments/assets/78c66121-f69c-4ca6-a3df-1510aa6b62e5" />
+
 
 ## Overview
 
