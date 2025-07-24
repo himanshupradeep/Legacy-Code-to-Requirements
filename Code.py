@@ -5,6 +5,7 @@ import pandas as pd
 from datetime import datetime
 from dotenv import load_dotenv
 from deepseek import DeepSeekAPI
+import re
 
 # 📁 Load API key
 load_dotenv()
@@ -17,18 +18,72 @@ client = DeepSeekAPI(api_key=api_key)
 
 # ─── Helpers ─────────────────────────────────────────────────────────────────
 
-def extract_functions(code: str):
-    try:
-        tree = ast.parse(code)
-    except SyntaxError as e:
-        st.error(f"🧯 Syntax error parsing code: {e}")
+def extract_functions_by_lang(code: str, lang: str):
+    if lang.lower() == 'python':
+        try:
+            tree = ast.parse(code)
+        except SyntaxError as e:
+            st.error(f"🧯 Syntax error parsing code: {e}")
+            return []
+        funcs = []
+        for node in ast.walk(tree):
+            if isinstance(node, ast.FunctionDef):
+                src = ast.get_source_segment(code, node)
+                funcs.append((node.name, src))
+        return funcs
+
+    elif lang.lower() in ['c', 'cpp', 'c++']:
+        # Naive C/C++ function extractor by regex and brace matching
+        pattern = re.compile(
+            r'([a-zA-Z_][a-zA-Z0-9_*\s]*?)\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(([^)]*)\)\s*{', re.MULTILINE
+        )
+        funcs = []
+        for match in pattern.finditer(code):
+            return_type = match.group(1).strip()
+            func_name = match.group(2).strip()
+            start = match.start()
+            # Brace matching to find function body end
+            brace_level = 0
+            end = start
+            for i in range(start, len(code)):
+                if code[i] == '{':
+                    brace_level += 1
+                elif code[i] == '}':
+                    brace_level -= 1
+                    if brace_level == 0:
+                        end = i + 1
+                        break
+            snippet = code[start:end]
+            funcs.append((func_name, snippet))
+        return funcs
+
+    elif lang.lower() == 'javascript':
+        # Naive JavaScript function extractor for function declarations only
+        pattern = re.compile(
+            r'function\s+([a-zA-Z$_][a-zA-Z0-9$_]*)\s*\([^)]*\)\s*{', re.MULTILINE
+        )
+        funcs = []
+        for match in pattern.finditer(code):
+            func_name = match.group(1)
+            start = match.start()
+            # Brace matching
+            brace_level = 0
+            end = start
+            for i in range(start, len(code)):
+                if code[i] == '{':
+                    brace_level += 1
+                elif code[i] == '}':
+                    brace_level -= 1
+                    if brace_level == 0:
+                        end = i + 1
+                        break
+            snippet = code[start:end]
+            funcs.append((func_name, snippet))
+        return funcs
+
+    else:
+        st.warning(f"Language '{lang}' not supported for function extraction yet.")
         return []
-    funcs = []
-    for node in ast.walk(tree):
-        if isinstance(node, ast.FunctionDef):
-            src = ast.get_source_segment(code, node)
-            funcs.append((node.name, src))
-    return funcs
 
 def generate_system_requirements(code: str) -> list:
     prompt = f"""
@@ -119,7 +174,7 @@ st.markdown(
     <div style="text-align: center; margin-bottom: 30px; font-family:sans-serif;">
         <h1>🕵️‍♂️ Legacy Code → Intelligent Requirements</h1>
         <h3>📘 Instructions</h3>
-        <p>Paste your full Python code below. The app will extract both system-level insights and function-specific requirements.</p>
+        <p>Paste your full code below. The app will extract both system-level insights and function-specific requirements.</p>
     </div>
     """,
     unsafe_allow_html=True,
@@ -127,14 +182,19 @@ st.markdown(
 
 col1, col2, col3 = st.columns([1, 3, 1])
 with col2:
-    st.subheader("🔍 Python Code Input")
+    language = st.selectbox(
+        "Select your code language",
+        options=["Python", "C", "C++", "JavaScript"],
+        index=0,
+    )
+    st.subheader("🔍 Your Code Input")
     code_input = st.text_area(
         "",
         value=st.session_state.full_code,
         height=300,
     )
     analyze_clicked = st.button("Analyze")
-
+    
     if analyze_clicked:
         if not code_input.strip():
             st.error("⚠️ Please paste some code first.")
@@ -147,7 +207,7 @@ with col2:
             with st.spinner("🔄 Generating system-level requirements..."):
                 st.session_state.system_reqs = generate_system_requirements(code_input)
 
-            funcs = extract_functions(code_input)
+            funcs = extract_functions_by_lang(code_input, language)
             frs = []
             for name, snippet in funcs:
                 with st.spinner(f"📦 Generating requirement for `{name}`..."):
@@ -160,21 +220,38 @@ if st.session_state.analyzed:
     with col2:
         st.subheader("📋 High-Level System Requirements")
         for idx, text in enumerate(st.session_state.system_reqs, start=1):
-            st.success(f"{idx}. {text}")
-
+            st.markdown(
+                f"""
+                <div style="
+                    background-color: #23272f;
+                    color: #e0e0e0;
+                    padding: 14px 20px;
+                    border-radius: 7px;
+                    margin-bottom: 12px;
+                    font-size: 1.08rem;
+                    font-family: 'Segoe UI', 'Arial', sans-serif;
+                    box-shadow: 0 1px 5px rgba(0,0,0,0.11);
+                ">
+                    <span style="font-weight: 700;">{idx}. </span>{text}
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        
         st.subheader("🧩 Function-Level Requirements")
         for idx, req in enumerate(st.session_state.func_reqs, start=1):
             label_text = f"{idx}. {req['Text']}"
             with st.expander(label_text):
-                st.code(req["Code"], language="python")
+                st.code(req["Code"], language=language.lower() if language.lower() != "c++" else "cpp")
 
-        # Combine system and functional requirements into a single CSV with category and serial numbers
+        # Prepare CSV export with serial numbering continuing from system to functional requirements
+        sys_count = len(st.session_state.system_reqs)
         sys_data = [
             {"S.No.": idx, "Requirement": text, "Category": "System Requirement", "Status": "New"}
             for idx, text in enumerate(st.session_state.system_reqs, start=1)
         ]
         func_data = [
-            {"S.No.": idx + len(sys_data), "Requirement": req["Text"], "Category": "Functional Requirement", "Status": "New"}
+            {"S.No.": idx + sys_count, "Requirement": req["Text"], "Category": "Functional Requirement", "Status": "New"}
             for idx, req in enumerate(st.session_state.func_reqs, start=1)
         ]
 
