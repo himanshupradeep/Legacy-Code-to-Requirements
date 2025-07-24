@@ -46,7 +46,7 @@ Automotive suppliers (OEMs, Tier 1/2) often deliver the same base software to mu
 
 ## Features
 
-- **Paste Any Python File:** Instantly extract and view both high-level system requirements and per-function requirements.
+- **Paste Any code :** Instantly extract and view both high-level system requirements and per-function requirements.
 - **Expandable, Numbered Requirement Cards:** Each requirement is interactive and linked to its code snippet.
 - **Export to CSV:** Download a categorized list of all requirements (System/Functional) with serial numbers.
 - **Designed for Automotive Legacy Modernization & Safety Workflows**
@@ -58,10 +58,10 @@ Automotive suppliers (OEMs, Tier 1/2) often deliver the same base software to mu
 2. Install dependencies:<br>
    `pip install -r requirements.txt`
 3. Add your DeepSeek API key to a `.env` file:<br>
-   DEEPSEEK_API_KEY=your_api_key_here
+   `DEEPSEEK_API_KEY=your_api_key_here`
 4. Run the app:<br>
     `streamlit run code.py`
-5. Paste your Python code, click **Analyze**, and review the extracted requirements!
+5. Paste your code, click **Analyze**, and review the extracted requirements!
 
 ## Example: CSV Export Schema
 
