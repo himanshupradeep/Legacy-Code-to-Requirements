@@ -5,7 +5,7 @@
 
 ## Overview
 
-This is a AI-powered Python application that helps engineering teams in the automotive industry extract high-level system and function-specific requirements directly from legacy C, C++, JavaScript and Python codebases. This workflow accelerates requirement traceability, refactoring, and modernization enabling safer, more agile, and standards-compliant product development.
+This is an AI-powered Python application that helps engineering teams in the automotive industry extract high-level system and function-specific requirements directly from legacy C, C++, JavaScript and Python codebases. This workflow accelerates requirement traceability, refactoring, and modernization enabling safer, more agile, and standards-compliant product development.
 
 ## Code Example
 The ADAS Adaptive Cruise Control (ACC) code snippet simulates a realistic vehicle speed and distance control system that automatically maintains safe following distance and adjusts speed based on sensor data. It includes modular functions for initialization, sensor input processing, state management (OFF, STANDBY, ACTIVE, ERROR), speed control via acceleration commands, and status reporting. This structured, well-commented code with clear functional boundaries enables the requirements extraction tool to generate meaningful system-level and function-level requirements reflecting real-world ACC capabilities and control logic.
@@ -76,6 +76,6 @@ Automotive suppliers (OEMs, Tier 1/2) often deliver the same base software to mu
 
 ## License & Usage
 
-This project is **free to use, modify, and distribute** for anyone whether you are developing your own projects, integrating it for professional use, or studying as a student. No restrictions apply.
+This project is **free to use, modify, and distribute** for anyone whether you are developing your own projects, integrating it for professional use, or studying as a student.
 
 Feel free to contribute, experiment, and build upon this tool to suit your needs.
