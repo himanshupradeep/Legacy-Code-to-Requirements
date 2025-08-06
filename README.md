@@ -11,14 +11,11 @@ This is an AI-powered Python application that helps engineering teams in the aut
 The ADAS Adaptive Cruise Control (ACC) code snippet simulates a realistic vehicle speed and distance control system that automatically maintains safe following distance and adjusts speed based on sensor data. It includes modular functions for initialization, sensor input processing, state management (OFF, STANDBY, ACTIVE, ERROR), speed control via acceleration commands, and status reporting. This structured, well-commented code with clear functional boundaries enables the requirements extraction tool to generate meaningful system-level and function-level requirements reflecting real-world ACC capabilities and control logic.
 
 This explanation highlights the key aspects inside the code that drive the generated requirements, helping your viewers connect the code structure and behavior to the formalized requirements statements.
-## Results showcasing Functional Requirements with respective function block snippet
-<img width="1557" height="880" alt="image" src="https://github.com/user-attachments/assets/9b560228-037d-4b24-979b-e3c29477481b" />
-
-
 ## Results showcasing System Requirements
 <img width="1401" height="704" alt="Screenshot 2025-07-24 124311" src="https://github.com/user-attachments/assets/ed810773-5d5c-486a-a7c9-8aa577a3bb1a" />
 
-
+## Results showcasing Functional Requirements with respective function block snippet
+<img width="1557" height="880" alt="image" src="https://github.com/user-attachments/assets/9b560228-037d-4b24-979b-e3c29477481b" />
 
 ## Why Extract Requirements from Legacy Code in Automotive?
 
